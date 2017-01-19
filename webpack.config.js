@@ -1,16 +1,18 @@
 "use strict";
 const webpack = require("webpack");
+const BowerWebpackPlugin = require('bower-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 // сборка для продакшена и для разработки
 const NODE_ENV = process.env.NODE_ENV || "development";
 
 module.exports = {
-    context: __dirname + "/frontend", // папка для поиска модулей
+    context: __dirname + "/assets", // папка для поиска модулей
 
-    entry: {
-        home: "./home", // какие файлы гинерить
-        about: "./about",
-    },
+    entry: [
+      // "bootstrap-webpack!./bootstrap.config.js",
+      "./scripts/main"
+    ],
 
     output: {
         path: "public", // папка с готовыми файлами
@@ -36,7 +38,14 @@ module.exports = {
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: "common"
-        })
+        }),
+        new BowerWebpackPlugin({
+          excludes: /.*\.less/
+        }),
+        new webpack.ProvidePlugin({
+          $:      "jquery",
+          jQuery: "jquery"
+        }),
     ],
 
 // для скорости, меньше вариантов для поиска модулей
@@ -52,13 +61,23 @@ module.exports = {
     },
 
     module: {
-        loaders: [{ // изменяет исходный файл и дает скомпилированный
+      loaders: [
+        { // изменяет исходный файл и дает скомпилированный
             test: /\.js$/,
             loader: "babel-loader",
             query: {
                 presets: ["es2015"]
             }
-        }]
+        },
+        {
+            test: /\.css$/,
+            loader: "css-loader!autoprefixer-loader"
+        },
+        {
+            test: /\.scss$/,
+            loader: "css-loader!sass-loader"
+        },
+      ]
     }
 };
 
