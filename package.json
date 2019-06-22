@@ -4,8 +4,8 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development",
-    "build": "webpack --mode production"
+    "start": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --output-path --mode development ",
+    "build": "./node_modules/webpack/bin/webpack.js --mode production"
   },
   "repository": {
     "type": "git",

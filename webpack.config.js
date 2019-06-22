@@ -4,13 +4,14 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = (env, argv) => {
-  const devMode = argv.mode === "development"
+  let devMode = argv.mode === "development";
 
+  console.log('Development mode: ' + (devMode ? 'enabled' : 'disabled'));
   return {
     entry: "./src/index.js",
     devtool: devMode ? "sourcemap" : false,
     output: {
-      path: path.join(__dirname, "/dist"),
+      path: path.join(__dirname, "/docs"),
       filename: "index_bundle.js"
     },
     module: {
