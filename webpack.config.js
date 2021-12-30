@@ -1,80 +1,40 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-module.exports = (env, argv) => {
-  const devMode = argv.mode === "development";
-
-  return {
-    entry: "./src/index.js",
-    devtool: devMode ? "sourcemap" : false,
-    output: {
-      path: path.join(__dirname, "/dist"),
-      filename: "index_bundle.js"
-    },
-    module: {
-      rules: [
-        {
-          test: /\.js$/,
-          exclude: /node_modules/,
-          use: {
-            loader: "babel-loader"
-          }
+module.exports = {
+  // Where files should be sent once they are bundled
+  output: {
+    path: path.join(__dirname, "/dist"),
+    filename: "index.bundle.js",
+  },
+  // webpack 5 comes with devServer which loads in development mode
+  devServer: {
+    port: 3000,
+    hot: "only",
+  },
+  // Rules of how webpack will take our files, complie & bundle them for the browser
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /nodeModules/,
+        use: {
+          loader: "babel-loader",
         },
-        {
-          test: /\.(sass|scss|css)$/,
-          use: [
-            "style-loader",
-            {
-              loader: MiniCssExtractPlugin.loader,
-              options: {
-                publicPath: "../",
-                hmr: devMode
-              }
-            },
-            "css-loader",
-            {
-              loader: "postcss-loader",
-              options: {
-                ident: "postcss",
-                plugins: loader => {
-                  if (devMode) {
-                    return [];
-                  } else {
-                    return [require("autoprefixer")(), require("cssnano")()];
-                  }
-                }
-              }
-            },
-            "sass-loader"
-          ]
-        },
-        {
-          test: /\.svg/,
-          use: {
-            loader: "svg-url-loader",
-            options: {}
-          }
-        }
-      ]
-    },
-    plugins: [
-      new HtmlWebpackPlugin({
-        template: "./src/index.html"
-      }),
-      new CopyWebpackPlugin([{ from: "./src/images", to: "./images" }]),
-      new MiniCssExtractPlugin({
-        // Options similar to the same options in webpackOptions.output
-        // both options are optional
-        filename: "[name].css",
-        chunkFilename: "[id].css"
-      })
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          // Creates `style` nodes from JS strings
+          "style-loader",
+          // Translates CSS into CommonJS
+          "css-loader",
+          "postcss-loader",
+          // Compiles Sass to CSS
+          "sass-loader",
+        ],
+      },
     ],
-    devServer: {
-      contentBase: path.join(__dirname, "dist"),
-      compress: false,
-      port: 3000
-    }
-  };
+  },
+  plugins: [new HtmlWebpackPlugin({ template: "./src/index.html" })],
 };
