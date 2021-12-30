@@ -1,21 +1,20 @@
 import React, { Component } from "react";
-import { HashRouter, Route } from "react-router-dom";
-import "./App.scss";
-import ImageLoad from "./ImageLoad/ImageLoad";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Signa from "./Signa/Signa";
-import SignaList from "./SignaList/SignaList";
+import "./App.scss";
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <HashRouter>
-          <Route
-            path="/"
-            exact={true}
-            render={props => <Signa {...props} name="newImage" />}
-          />
-        </HashRouter>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={<Signa name="newImage" />}
+            />
+          </Routes>
+        </BrowserRouter>
       </div>
     );
   }

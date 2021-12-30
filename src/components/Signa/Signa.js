@@ -163,6 +163,7 @@ class Signa extends Component {
     let { rotate, fontSize, name, color, strokeColor } = this.state.textList[
       selectKey
     ];
+    console.log('ok')
 
     return (
       <Layout>
