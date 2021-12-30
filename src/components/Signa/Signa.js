@@ -1,23 +1,20 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import SignaCreator from "../SignaCreator/SignaCreator";
 import ElementToImg from "../ElementToImg/ElementToImg";
-import { setStorage, getStorage, getStorageState } from "../Storage/storage";
 import Layout from "../Layout/Layout";
+import { DEFAULT_TEXT } from "./constants";
 import "./Signa.scss";
-
-const DEFAULT_TEXT = "Пример текста ";
 
 const defaultTextData = {
   name: DEFAULT_TEXT,
   pos: {
     x: 170,
-    y: -140
+    y: -140,
   },
   fontSize: 20,
   color: "#000000",
   strokeColor: "#ffffff",
-  rotate: 0
+  rotate: 0,
 };
 
 class Signa extends Component {
@@ -33,23 +30,23 @@ class Signa extends Component {
       textList: [{ ...defaultTextData }],
       typeImg: "jpg",
       loadedImage: false,
-      download: false // если нажали на скачать
+      download: false, // если нажали на скачать
     };
     // setStorage("test", { get: 1 });
   }
 
-  handleText = e => {
+  handleText = (e) => {
     const textList = [...this.state.textList];
     textList[this.state.selectKey].name = e.target.value;
 
     this.setState({
-      textList: textList
+      textList: textList,
     });
   };
 
-  selectFormat = e => {
+  selectFormat = (e) => {
     this.setState({
-      typeImg: e.target.value
+      typeImg: e.target.value,
     });
   };
 
@@ -65,43 +62,43 @@ class Signa extends Component {
     textList[k].pos = prevPos;
 
     this.setState({
-      textList: textList
+      textList: textList,
     });
   };
 
-  handleFontSize = e => {
+  handleFontSize = (e) => {
     const textList = [...this.state.textList];
     textList[this.state.selectKey].fontSize = e.target.value;
 
     this.setState({
-      textList: textList
+      textList: textList,
     });
   };
 
-  handleColor = e => {
+  handleColor = (e) => {
     const textList = [...this.state.textList];
     textList[this.state.selectKey].color = e.target.value;
 
     this.setState({
-      textList: textList
+      textList: textList,
     });
   };
 
-  handleStrokeColor = e => {
+  handleStrokeColor = (e) => {
     const textList = [...this.state.textList];
     textList[this.state.selectKey].strokeColor = e.target.value;
 
     this.setState({
-      textList: textList
+      textList: textList,
     });
   };
 
-  handleRotate = e => {
+  handleRotate = (e) => {
     const textList = [...this.state.textList];
     textList[this.state.selectKey].rotate = e.target.value;
 
     this.setState({
-      textList: textList
+      textList: textList,
     });
   };
 
@@ -110,7 +107,7 @@ class Signa extends Component {
     const typeImg = this.state.typeImg;
     this.setState(
       {
-        download: true
+        download: true,
       },
       () => {
         ElementToImg(node, typeImg);
@@ -118,7 +115,7 @@ class Signa extends Component {
     );
     setTimeout(() => {
       this.setState({
-        download: false
+        download: false,
       });
     }, 1000);
   };
@@ -126,7 +123,7 @@ class Signa extends Component {
   handleLoadImage = () => {
     console.log("loaded");
     this.setState({
-      loadedImage: true
+      loadedImage: true,
     });
   };
 
@@ -140,13 +137,13 @@ class Signa extends Component {
     // Новая позиция элемента
     textList.push(defaultTextData);
     this.setState({
-      textList: textList
+      textList: textList,
     });
   };
 
-  handleSelectText = key => {
+  handleSelectText = (key) => {
     this.setState({
-      selectKey: key
+      selectKey: key,
     });
   };
 
@@ -157,13 +154,12 @@ class Signa extends Component {
       selectKey,
       selectTextData,
       loadedImage,
-      download
+      download,
     } = this.state;
 
-    let { rotate, fontSize, name, color, strokeColor } = this.state.textList[
-      selectKey
-    ];
-    console.log('ok')
+    let { rotate, fontSize, name, color, strokeColor } =
+      this.state.textList[selectKey];
+    console.log("ok");
 
     return (
       <Layout>
@@ -286,99 +282,6 @@ class Signa extends Component {
               </button>
             </div>
           </div>
-          {/*
-          <div className={"signa__form " + (loadedImage ? "show" : "hidden")}>
-            <div className="form-line form-line-between ">
-              <label className="form-line">
-                <span>Поворот текста: </span>
-                <input
-                  type="range"
-                  className="form-control"
-                  min="-180"
-                  max="180"
-                  onChange={this.handleRotate}
-                  defaultValue={rotate}
-                />
-                <span>{rotate}</span>
-              </label>
-            </div>
-
-            <hr />
-
-            <label className="signa__label">
-              <input
-                type="text"
-                className="form-control signa__input"
-                id="text1"
-                onChange={this.inputText}
-                placeholder={text1.name}
-              />
-            </label>
-
-            <label className="signa__label">
-              <input
-                type="text"
-                className="form-control signa__input"
-                id="text2"
-                onChange={this.inputText}
-                placeholder={text2.name}
-              />
-            </label>
-            <hr />
-
-            <div className="form-line form-line-between ">
-              <label className="form-line">
-                <span>Размер шрифта: </span>
-                <input
-                  type="range"
-                  className="form-control"
-                  min="10"
-                  max="40"
-                  onChange={this.handleFontSize}
-                  defaultValue={fontSize}
-                />
-                <span>{fontSize}</span>
-              </label>
-            </div>
-
-            <hr />
-
-            <div className="form-line form-line-between">
-              <label className="form-line">
-                <span>Цвет текста: </span>
-                <input
-                  type="color"
-                  onChange={this.handleColor}
-                  defaultValue={color}
-                />
-              </label>
-            </div>
-
-            <hr />
-            <div className="form-line form-line-between">
-              <div>
-                <Link to="/" className="btn btn-danger">
-                  Назад
-                </Link>
-              </div>
-              <div className="form-line">
-                <select
-                  value={typeImg}
-                  onChange={this.selectFormat}
-                  className="form-control"
-                >
-                  <option value="jpg">jpg</option>
-                  <option value="png">png</option>
-                </select>
-                <button
-                  className="btn btn-success"
-                  onClick={this.handleGenerate}
-                >
-                  Скачать
-                </button>
-              </div>
-            </div>
-          </div> */}
         </div>
       </Layout>
     );
