@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import SignaCreator from "../SignaCreator/SignaCreator";
 import ElementToImg from "../ElementToImg/ElementToImg";
-import Layout from "../Layout/Layout";
+import { Layout } from "../Layout/Layout";
 import { DEFAULT_TEXT } from "./constants";
 import "./Signa.scss";
 
@@ -84,8 +84,7 @@ const Signa = () => {
     }, 1000);
   };
 
-
-  const handleLoadImage = () => setLoadedImage(true)
+  const handleLoadImage = () => setLoadedImage(true);
 
   const handleAppendText = () => {
     let thisDefaultTextData = { ...defaultTextData };
@@ -99,7 +98,7 @@ const Signa = () => {
     setTextList(thisTextList);
   };
 
-  const handleSelectText = key => setSelectKey(key)
+  const handleSelectText = (key) => setSelectKey(key);
 
   let { rotate, fontSize, name, color, strokeColor } = textList[selectKey];
 
@@ -225,4 +224,4 @@ const Signa = () => {
   );
 };
 
-export default Signa
+export default Signa;
