@@ -50,15 +50,6 @@
     text-shadow: #fff 1px 1px 0, #fff -1px -1px 0, #fff -1px 1px 0, #fff 1px -1px 0;
     transition: all .2s ease;
     border-radius: $border-radius-base;
-
-    &:before {
-        content: '';
-        display: block;
-        width: 1.4em;
-        height: 1.5em;
-        border-top-left-radius: $border-radius-base;
-        border-bottom-left-radius: $border-radius-base;
-    }
   }
 
   &__text {
