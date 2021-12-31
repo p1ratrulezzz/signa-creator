@@ -1,67 +1,60 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import "./ImageLoad.scss";
 
-class ImageLoad extends Component {
-  state = {
-    file: ""
-  };
+export const ImageLoad = ({handleLoadImage}) => {
+  const [file, setFile] = useState("");
 
-  loadFile = file => {
-    console.log('f', file)
-    if (file && file.type !== 'image/png' && file.type !== 'image/jpeg' && file.type !== 'image/svg+xml') {
-      alert('Не верный формат файла!')
+  const loadFile = (file) => {
+    console.log("f", file);
+    if (
+      file &&
+      file.type !== "image/png" &&
+      file.type !== "image/jpeg" &&
+      file.type !== "image/svg+xml"
+    ) {
+      alert("Не верный формат файла!");
       return;
     }
     // получение ссылки на файл
     let reader = new FileReader();
-    reader.onload = e => {
-      this.setState({
-        file: e.target.result
-      });
-      this.props.handleLoadImage()
+    reader.onload = (e) => {
+      setFile(e.target.result)
+      handleLoadImage();
     };
     reader.readAsDataURL(file);
   };
 
-  handleFileLoad = e => {
+  const handleFileLoad = (e) => {
     const file = e.target.files[0];
-    if (file !== undefined) return this.loadFile(file);
-    console.log('Не удалось загрузить файл!')
+    if (file !== undefined) return loadFile(file);
+    console.log("Не удалось загрузить файл!");
   };
 
-  handleDelete = () => {
-    this.setState({
-      file: ''
-    })
-  }
+  const handleDelete = () => {
+    setFile("")
+  };
 
-  render() {
-    const { file } = this.state;
-    let statusImageClass = '';
 
-    if (file === '') {
-      statusImageClass = 'noload';
-    } else {
-      statusImageClass = 'load'
-    }
-    return (
-      <form className={"imageLoad " + statusImageClass}>
-        <div className="imageLoad__content">
-          <div className="imageLoad__image">
-            <span>Загрузить изображение</span>
-            <img src={file} />
-          </div>
-          <div className="imageLoad__inputGroup">
-            <div className="imageLoad__label">
-              <label htmlFor="file" className="imageLoad__add">+</label>
-              <input type="file" id="file" onChange={this.handleFileLoad} />
-            </div>
-            <button onClick={this.handleDelete} className="imageLoad__delete"></button>
-          </div>
+  return (
+    <form className={`imageLoad ${file === '' ? "noload" : "load"}`}>
+      <div className="imageLoad__content">
+        <div className="imageLoad__image">
+          <span>Загрузить изображение</span>
+          <img src={file} />
         </div>
-      </form>
-    );
-  }
-}
-
-export default ImageLoad;
+        <div className="imageLoad__inputGroup">
+          <div className="imageLoad__label">
+            <label htmlFor="file" className="imageLoad__add">
+              +
+            </label>
+            <input type="file" id="file" onChange={handleFileLoad} />
+          </div>
+          <button
+            onClick={handleDelete}
+            className="imageLoad__delete"
+          ></button>
+        </div>
+      </div>
+    </form>
+  );
+};

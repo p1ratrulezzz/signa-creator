@@ -1,5 +1,5 @@
 import React from "react";
-import ImageLoad from "../ImageLoad/ImageLoad";
+import { ImageLoad } from "../ImageLoad/ImageLoad";
 import { TextInDom } from "./components";
 import "./SignaCreator.scss";
 
@@ -13,7 +13,7 @@ export const SignaCreator = ({
   return (
     <div className={"SignaCreator SignaCreator--ogo"}>
       <div className="SignaCreator__content" id="content">
-        <ImageLoad handleLoadImage={handleLoadImage} />
+        <ImageLoad {...{ handleLoadImage }} />
         {textList.map((settings, key) => {
           return (
             <TextInDom
