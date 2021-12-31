@@ -73,17 +73,6 @@
     justify-content: space-between;
     padding: 0 10px;
   }
-
-  &__btn {
-    display: block;
-    width: 50px;
-    height: 50px;
-    background: url('./edit.svg') no-repeat center;
-    background-color: white;
-    background-size: 50%;
-    transition: all .2s;
-    border: 0;
-  }
 }
 
 .imageLoad.noload~.SignaCreator__textContent {
@@ -106,16 +95,6 @@
       &.active {
         .SignaCreator__row {
           box-shadow: 1px 1px 10px 1px $success;
-
-          &:before {
-            content: '';
-            display: block;
-            width: 1.4em;
-            height: 1.5em;
-            background: url('../../images/edit.svg') no-repeat center;
-            background-size: .7em .7em;
-            background-color: $success;
-          }
         }
       }
     }
