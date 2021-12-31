@@ -2,25 +2,13 @@ import React, { useState } from "react";
 import {SignaCreator} from "../SignaCreator/SignaCreator";
 import ElementToImg from "../ElementToImg/ElementToImg";
 import { Layout } from "../Layout/Layout";
-import { DEFAULT_TEXT } from "./constants";
+import { DEFAULT_TEXT, DEFAULT_TEXT_DATA } from "./constants";
 import "./Signa.scss";
 
-const defaultTextData = {
-  name: DEFAULT_TEXT,
-  pos: {
-    x: 170,
-    y: -140,
-  },
-  fontSize: 20,
-  color: "#000000",
-  strokeColor: "#ffffff",
-  rotate: 0,
-};
-
-const Signa = () => {
+export const Signa = () => {
   const [selectTextData, setSelectTextData] = useState({});
   const [selectKey, setSelectKey] = useState(0);
-  const [textList, setTextList] = useState([{ ...defaultTextData }]);
+  const [textList, setTextList] = useState([{ ...DEFAULT_TEXT_DATA }]);
   const [typeImage, setTypeImage] = useState("jpg");
   const [loadedImage, setLoadedImage] = useState(false);
   const [download, setDownload] = useState(false);
@@ -87,7 +75,7 @@ const Signa = () => {
   const handleLoadImage = () => setLoadedImage(true);
 
   const handleAppendText = () => {
-    let thisDefaultTextData = { ...defaultTextData };
+    let thisDefaultTextData = { ...DEFAULT_TEXT_DATA };
     let thisTextList = [...textList];
 
     let len = thisTextList.length;
@@ -223,5 +211,3 @@ const Signa = () => {
     </Layout>
   );
 };
-
-export default Signa;
