@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SignaCreator from "../SignaCreator/SignaCreator";
+import {SignaCreator} from "../SignaCreator/SignaCreator";
 import ElementToImg from "../ElementToImg/ElementToImg";
 import { Layout } from "../Layout/Layout";
 import { DEFAULT_TEXT } from "./constants";

@@ -1,6 +1,6 @@
 import domtoimage from "dom-to-image";
 
-function getName(type) {
+const getName = (type) => {
   let d = new Date();
   return (
     "signa_" +
