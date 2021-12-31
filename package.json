@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
+    "precommit": "lint-staged",
     "deploy": "rm -rf dist/ && npm run build && gh-pages -d dist"
   },
   "repository": {
@@ -25,9 +26,12 @@
     "babel-loader": "^8.2.3",
     "copy-webpack-plugin": "^10.2.0",
     "css-loader": "^6.5.1",
+    "eslint": "^8.5.0",
     "file-loader": "^6.2.0",
     "gh-pages": "^3.2.3",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.1.4",
     "node-sass": "^7.0.1",
     "postcss": "^8.4.5",
     "postcss-loader": "^6.2.1",
@@ -50,5 +54,11 @@
     "react-router-dom": "^6.2.1",
     "redux": "^4.0.5",
     "redux-actions": "^2.6.5"
+  },
+  "lint-staged": {
+    "* .js": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
