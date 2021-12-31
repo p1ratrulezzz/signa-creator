@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import SignaCreator from "../SignaCreator/SignaCreator";
 import ElementToImg from "../ElementToImg/ElementToImg";
 import Layout from "../Layout/Layout";
@@ -17,275 +17,212 @@ const defaultTextData = {
   rotate: 0,
 };
 
-class Signa extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // ...getStorageState(this.props.name),
-      defaultTextData: { ...defaultTextData },
-      selectTextData: {
-        // выбранный текст
-      },
-      selectKey: 0,
-      textList: [{ ...defaultTextData }],
-      typeImg: "jpg",
-      loadedImage: false,
-      download: false, // если нажали на скачать
-    };
-    // setStorage("test", { get: 1 });
-  }
+const Signa = () => {
+  const [selectTextData, setSelectTextData] = useState({});
+  const [selectKey, setSelectKey] = useState(0);
+  const [textList, setTextList] = useState([{ ...defaultTextData }]);
+  const [typeImage, setTypeImage] = useState("jpg");
+  const [loadedImage, setLoadedImage] = useState(false);
+  const [download, setDownload] = useState(false);
 
-  handleText = (e) => {
-    const textList = [...this.state.textList];
-    textList[this.state.selectKey].name = e.target.value;
+  const handleText = (e) => {
+    const thisTextList = [...textList];
+    thisTextList[selectKey].name = e.target.value;
 
-    this.setState({
-      textList: textList,
-    });
+    setTextList(thisTextList);
   };
 
-  selectFormat = (e) => {
-    this.setState({
-      typeImg: e.target.value,
-    });
+  const selectFormat = (e) => {
+    setTypeImage(e.target.value);
   };
 
-  handleDragStop = (e, pos, k) => {
-    const { x, y } = pos;
-    let textList = [...this.state.textList];
-    let prevPos = textList[k].pos;
+  const handleDragStop = (e, pos, k) => {
+    const x = pos.x;
+    const y = pos.y;
+    let thisTextList = [...textList];
+
+    let prevPos = thisTextList[k].pos;
     prevPos = { ...prevPos };
 
     prevPos.x = x;
     prevPos.y = y;
 
-    textList[k].pos = prevPos;
-
-    this.setState({
-      textList: textList,
-    });
+    thisTextList[k].pos = prevPos;
+    setTextList(thisTextList);
   };
 
-  handleFontSize = (e) => {
-    const textList = [...this.state.textList];
-    textList[this.state.selectKey].fontSize = e.target.value;
-
-    this.setState({
-      textList: textList,
-    });
+  const handleFontSize = (e) => {
+    const thisTextList = [...textList];
+    thisTextList[selectKey].fontSize = e.target.value;
+    setTextList(thisTextList);
   };
 
-  handleColor = (e) => {
-    const textList = [...this.state.textList];
-    textList[this.state.selectKey].color = e.target.value;
-
-    this.setState({
-      textList: textList,
-    });
+  const handleColor = (e) => {
+    const thisTextList = [...textList];
+    thisTextList[selectKey].color = e.target.value;
+    setTextList(thisTextList);
   };
 
-  handleStrokeColor = (e) => {
-    const textList = [...this.state.textList];
-    textList[this.state.selectKey].strokeColor = e.target.value;
-
-    this.setState({
-      textList: textList,
-    });
+  const handleStrokeColor = (e) => {
+    const thisTextList = [...textList];
+    thisTextList[selectKey].strokeColor = e.target.value;
+    setTextList(thisTextList);
   };
 
-  handleRotate = (e) => {
-    const textList = [...this.state.textList];
-    textList[this.state.selectKey].rotate = e.target.value;
-
-    this.setState({
-      textList: textList,
-    });
+  const handleRotate = (e) => {
+    const thisTextList = [...textList];
+    thisTextList[selectKey].rotate = e.target.value;
+    setTextList(thisTextList);
   };
 
-  handleGenerate = () => {
+  const handleGenerate = () => {
     const node = document.getElementById("content");
-    const typeImg = this.state.typeImg;
-    this.setState(
-      {
-        download: true,
-      },
-      () => {
-        ElementToImg(node, typeImg);
-      }
-    );
+    setDownload(true);
+    ElementToImg(node, typeImage);
     setTimeout(() => {
-      this.setState({
-        download: false,
-      });
+      setDownload(false);
     }, 1000);
   };
 
-  handleLoadImage = () => {
-    console.log("loaded");
-    this.setState({
-      loadedImage: true,
-    });
-  };
 
-  handleAppendText = () => {
-    let defaultTextData = { ...this.state.defaultTextData };
-    let textList = [...this.state.textList];
+  const handleLoadImage = () => setLoadedImage(true)
 
-    let len = textList.length;
-    defaultTextData.name = DEFAULT_TEXT + (len + 1);
+  const handleAppendText = () => {
+    let thisDefaultTextData = { ...defaultTextData };
+    let thisTextList = [...textList];
+
+    let len = thisTextList.length;
+    thisDefaultTextData.name = DEFAULT_TEXT + (len + 1);
 
     // Новая позиция элемента
-    textList.push(defaultTextData);
-    this.setState({
-      textList: textList,
-    });
+    thisTextList.push(thisDefaultTextData);
+    setTextList(thisTextList);
   };
 
-  handleSelectText = (key) => {
-    this.setState({
-      selectKey: key,
-    });
-  };
+  const handleSelectText = key => setSelectKey(key)
 
-  render() {
-    const {
-      textList,
-      typeImg,
-      selectKey,
-      selectTextData,
-      loadedImage,
-      download,
-    } = this.state;
+  let { rotate, fontSize, name, color, strokeColor } = textList[selectKey];
 
-    let { rotate, fontSize, name, color, strokeColor } =
-      this.state.textList[selectKey];
-    console.log("ok");
-
-    return (
-      <Layout>
-        <div
-          className={
-            "container signa " +
-            (loadedImage ? "show" : "hidden") +
-            (download ? " singa-download" : "")
-          }
-        >
-          <div className="signa__content">
-            <SignaCreator
-              textList={textList}
-              type={typeImg}
-              selectKey={selectKey}
-              selectTextData={selectTextData}
-              handleText={this.handleText}
-              handleSelectText={this.handleSelectText}
-              handleLoadImage={this.handleLoadImage}
-              handleDragStop={this.handleDragStop}
-            />
+  return (
+    <Layout>
+      <div
+        className={
+          "container signa " +
+          (loadedImage ? "show" : "hidden") +
+          (download ? " singa-download" : "")
+        }
+      >
+        <div className="signa__content">
+          <SignaCreator
+            textList={textList}
+            type={typeImage}
+            selectKey={selectKey}
+            selectTextData={selectTextData}
+            handleText={handleText}
+            handleSelectText={handleSelectText}
+            handleLoadImage={handleLoadImage}
+            handleDragStop={handleDragStop}
+          />
+        </div>
+        <div className="signa__form">
+          <p>Создайте свою картинку, скачайте и го работать!</p>
+          <button className="btn btn-primary" onClick={handleAppendText}>
+            Добавить строку
+          </button>
+          <hr />
+          <div className="form-line form-line-between ">
+            <label className="form-line form-line-full">
+              <span>Tекст: </span>
+              <textarea
+                type="text"
+                className="form-control signa__input"
+                onChange={handleText}
+                value={name}
+              ></textarea>
+            </label>
           </div>
-          <div className="signa__form">
-            <p>Создайте свою картинку, скачайте и го работать!</p>
-            <button className="btn btn-primary" onClick={this.handleAppendText}>
-              Добавить строку
-            </button>
+          <hr />
+
+          <div className="signa__picture-control">
+            <div className="form-line form-line-between ">
+              <label className="form-line">
+                <span>Поворот текста: </span>
+                <input
+                  type="range"
+                  className="form-control"
+                  min="-180"
+                  max="180"
+                  onChange={handleRotate}
+                  value={rotate}
+                />
+                <span>{rotate}</span>
+              </label>
+            </div>
+
             <hr />
             <div className="form-line form-line-between ">
-              <label className="form-line form-line-full">
-                <span>Tекст: </span>
-                <textarea
-                  type="text"
-                  className="form-control signa__input"
-                  onChange={this.handleText}
-                  value={name}
-                ></textarea>
+              <label className="form-line">
+                <span>Размер шрифта: </span>
+                <input
+                  type="range"
+                  className="form-control"
+                  min="10"
+                  max="60"
+                  onChange={handleFontSize}
+                  value={fontSize}
+                />
+                <span>{fontSize}</span>
               </label>
             </div>
             <hr />
-
-            <div className="signa__picture-control">
-              <div className="form-line form-line-between ">
-                <label className="form-line">
-                  <span>Поворот текста: </span>
-                  <input
-                    type="range"
-                    className="form-control"
-                    min="-180"
-                    max="180"
-                    onChange={this.handleRotate}
-                    value={rotate}
-                  />
-                  <span>{rotate}</span>
-                </label>
-              </div>
-
-              <hr />
-              <div className="form-line form-line-between ">
-                <label className="form-line">
-                  <span>Размер шрифта: </span>
-                  <input
-                    type="range"
-                    className="form-control"
-                    min="10"
-                    max="60"
-                    onChange={this.handleFontSize}
-                    value={fontSize}
-                  />
-                  <span>{fontSize}</span>
-                </label>
-              </div>
-              <hr />
-
-              <div className="form-line form-line-between">
-                <label className="form-line">
-                  <span>Цвет текста: </span>
-                  <input
-                    type="color"
-                    onChange={this.handleColor}
-                    value={color}
-                  />
-                </label>
-              </div>
-
-              <hr />
-
-              <div className="form-line form-line-between">
-                <label className="form-line">
-                  <span>Цвет обводки: </span>
-                  <input
-                    type="color"
-                    onChange={this.handleStrokeColor}
-                    value={strokeColor}
-                  />
-                </label>
-              </div>
-
-              <hr />
-            </div>
 
             <div className="form-line form-line-between">
               <label className="form-line">
-                <span>Тип файла: </span>
-                <select
-                  value={typeImg}
-                  onChange={this.selectFormat}
-                  className="form-control"
-                >
-                  <option value="jpg">jpg</option>
-                  <option value="png">png</option>
-                </select>
+                <span>Цвет текста: </span>
+                <input type="color" onChange={handleColor} value={color} />
               </label>
             </div>
+
             <hr />
-            <div className="form-line  form-line-between">
-              <span />
-              <button className="btn btn-success" onClick={this.handleGenerate}>
-                Скачать
-              </button>
+
+            <div className="form-line form-line-between">
+              <label className="form-line">
+                <span>Цвет обводки: </span>
+                <input
+                  type="color"
+                  onChange={handleStrokeColor}
+                  value={strokeColor}
+                />
+              </label>
             </div>
+
+            <hr />
+          </div>
+
+          <div className="form-line form-line-between">
+            <label className="form-line">
+              <span>Тип файла: </span>
+              <select
+                value={typeImage}
+                onChange={selectFormat}
+                className="form-control"
+              >
+                <option value="jpg">jpg</option>
+                <option value="png">png</option>
+              </select>
+            </label>
+          </div>
+          <hr />
+          <div className="form-line  form-line-between">
+            <span />
+            <button className="btn btn-success" onClick={handleGenerate}>
+              Скачать
+            </button>
           </div>
         </div>
-      </Layout>
-    );
-  }
-}
+      </div>
+    </Layout>
+  );
+};
 
-export default Signa;
+export default Signa
