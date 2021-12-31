@@ -3,9 +3,8 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import Signa from "./Signa/Signa";
 import "./App.scss";
 
-console.log("App js");
 
-export default () => {
+export default ({version}) => {
   return (
     <div className="App">
       <HashRouter>
@@ -13,6 +12,7 @@ export default () => {
           <Route path="/" element={<Signa name="newImage" />} />
         </Routes>
       </HashRouter>
+      <div className="app-version">{version}</div>
     </div>
   );
 };

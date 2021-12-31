@@ -1,5 +1,6 @@
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
+const webpack = require("webpack")
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
