@@ -1,1 +1,1 @@
-export { TextInDom } from "./TextInDom.jsx";
+export { TextInDom } from './TextInDom.jsx';

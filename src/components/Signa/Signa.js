@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import {SignaCreator} from "../SignaCreator/SignaCreator";
-import ElementToImg from "../ElementToImg/ElementToImg";
-import { Layout } from "../Layout/Layout";
-import { DEFAULT_TEXT, DEFAULT_TEXT_DATA } from "./constants";
-import "./Signa.scss";
+import React, { useState } from 'react';
+import { SignaCreator } from '../SignaCreator/SignaCreator';
+import ElementToImg from '../ElementToImg/ElementToImg';
+import { Layout } from '../Layout/Layout';
+import { DEFAULT_TEXT, DEFAULT_TEXT_DATA } from './constants';
+import './Signa.scss';
 
 export const Signa = () => {
   const [selectTextData, setSelectTextData] = useState({});
   const [selectKey, setSelectKey] = useState(0);
   const [textList, setTextList] = useState([{ ...DEFAULT_TEXT_DATA }]);
-  const [typeImage, setTypeImage] = useState("jpg");
+  const [typeImage, setTypeImage] = useState('jpg');
   const [loadedImage, setLoadedImage] = useState(false);
   const [download, setDownload] = useState(false);
 
@@ -64,7 +64,7 @@ export const Signa = () => {
   };
 
   const handleGenerate = () => {
-    const node = document.getElementById("content");
+    const node = document.getElementById('content');
     setDownload(true);
     ElementToImg(node, typeImage);
     setTimeout(() => {
@@ -94,9 +94,9 @@ export const Signa = () => {
     <Layout>
       <div
         className={
-          "container signa " +
-          (loadedImage ? "show" : "hidden") +
-          (download ? " singa-download" : "")
+          'container signa ' +
+          (loadedImage ? 'show' : 'hidden') +
+          (download ? ' singa-download' : '')
         }
       >
         <div className="signa__content">

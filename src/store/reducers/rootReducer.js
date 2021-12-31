@@ -1,13 +1,13 @@
 import {
   fetchSingaRequest,
   fetchSingaSuccess,
-  fetchSingaFilure
-} from "../actions/fetchActions";
+  fetchSingaFilure,
+} from '../actions/fetchActions';
 
 const initialState = {
   isFetching: false,
   isFetched: false,
-  error: null
+  error: null,
 };
 
 export default (state = initialState, action) => {
@@ -15,13 +15,13 @@ export default (state = initialState, action) => {
     case fetchSingaRequest().type:
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
       };
     case fetchSingaSuccess().type:
       return {
         ...state,
         isFetching: false,
-        isFetched: true
+        isFetched: true,
       };
 
     case fetchSingaFilure().type:
@@ -29,7 +29,7 @@ export default (state = initialState, action) => {
         ...state,
         isFetching: false,
         isFetched: false,
-        error: new Error("Error loaded!")
+        error: new Error('Error loaded!'),
       };
 
     default:

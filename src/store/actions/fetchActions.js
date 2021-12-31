@@ -1,20 +1,20 @@
-import { createActions } from "redux-actions";
+import { createActions } from 'redux-actions';
 
 export const fetchSingaRequest = () => {
   return {
-    type: "FETCH_SINGA_REQUEST",
-    payload: ""
+    type: 'FETCH_SINGA_REQUEST',
+    payload: '',
   };
 };
 export const fetchSingaSuccess = () => {
   return {
-    type: "FETCH_SINGA_SUCCESS",
-    payload: ""
+    type: 'FETCH_SINGA_SUCCESS',
+    payload: '',
   };
 };
 export const fetchSingaFilure = () => {
   return {
-    type: "FETCH_SINGA_FILURE",
-    payload: ""
+    type: 'FETCH_SINGA_FILURE',
+    payload: '',
   };
 };

@@ -4,17 +4,17 @@ const setStorage = (key, val) => {
     return localStorage.setItem(key, val);
   } catch (e) {
     if (e == QUOTA_EXCEEDED_ERR) {
-      alert("Превышен лимит памяти в браузере!");
+      alert('Превышен лимит памяти в браузере!');
     }
   }
 };
 
-const getStorage = key => {
+const getStorage = (key) => {
   let res = localStorage.getItem(key);
   return JSON.parse(res);
 };
 
-const removeStorage = key => {
+const removeStorage = (key) => {
   return localStorage.removeItem(key);
 };
 
@@ -22,7 +22,7 @@ const clearStorage = () => {
   return localStorage.clear();
 };
 
-const getStorageState = name => {
+const getStorageState = (name) => {
   if (getStorage(name)) {
     return getStorage(name);
   } else {
@@ -31,19 +31,19 @@ const getStorageState = name => {
         name: 'Первая строка',
         pos: {
           x: 50,
-          y: -50
-        }
+          y: -50,
+        },
       },
       text2: {
         name: 'Вторая строка',
         pos: {
           x: 50,
-          y: -70
-        }
+          y: -70,
+        },
       },
-      typeImg: "jpg",
+      typeImg: 'jpg',
       fontSize: 20,
-      color: "#ccc",
+      color: '#ccc',
       rotate: 0,
     };
     setStorage(name, defaultData);

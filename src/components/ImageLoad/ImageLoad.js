@@ -1,24 +1,24 @@
-import React, { useState } from "react";
-import "./ImageLoad.scss";
+import React, { useState } from 'react';
+import './ImageLoad.scss';
 
-export const ImageLoad = ({handleLoadImage}) => {
-  const [file, setFile] = useState("");
+export const ImageLoad = ({ handleLoadImage }) => {
+  const [file, setFile] = useState('');
 
   const loadFile = (file) => {
-    console.log("f", file);
+    console.log('f', file);
     if (
       file &&
-      file.type !== "image/png" &&
-      file.type !== "image/jpeg" &&
-      file.type !== "image/svg+xml"
+      file.type !== 'image/png' &&
+      file.type !== 'image/jpeg' &&
+      file.type !== 'image/svg+xml'
     ) {
-      alert("Не верный формат файла!");
+      alert('Не верный формат файла!');
       return;
     }
     // получение ссылки на файл
     let reader = new FileReader();
     reader.onload = (e) => {
-      setFile(e.target.result)
+      setFile(e.target.result);
       handleLoadImage();
     };
     reader.readAsDataURL(file);
@@ -27,16 +27,15 @@ export const ImageLoad = ({handleLoadImage}) => {
   const handleFileLoad = (e) => {
     const file = e.target.files[0];
     if (file !== undefined) return loadFile(file);
-    console.log("Не удалось загрузить файл!");
+    console.log('Не удалось загрузить файл!');
   };
 
   const handleDelete = () => {
-    setFile("")
+    setFile('');
   };
 
-
   return (
-    <form className={`imageLoad ${file === '' ? "noload" : "load"}`}>
+    <form className={`imageLoad ${file === '' ? 'noload' : 'load'}`}>
       <div className="imageLoad__content">
         <div className="imageLoad__image">
           <span>Загрузить изображение</span>
@@ -49,10 +48,7 @@ export const ImageLoad = ({handleLoadImage}) => {
             </label>
             <input type="file" id="file" onChange={handleFileLoad} />
           </div>
-          <button
-            onClick={handleDelete}
-            className="imageLoad__delete"
-          ></button>
+          <button onClick={handleDelete} className="imageLoad__delete"></button>
         </div>
       </div>
     </form>

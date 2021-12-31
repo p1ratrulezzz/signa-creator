@@ -1,8 +1,8 @@
-import { compose, createStore, applyMiddleware } from "redux";
-import rootReducer from "../store/reducers/rootReducer";
+import { compose, createStore, applyMiddleware } from 'redux';
+import rootReducer from '../store/reducers/rootReducer';
 
-const logger = store => next => action => {
-  console.info("logger: ", action.type);
+const logger = (store) => (next) => (action) => {
+  console.info('logger: ', action.type);
   return next(action);
 };
 
@@ -11,6 +11,6 @@ export default createStore(
   undefined,
   compose(
     applyMiddleware(logger),
-    window.devToolsExtension ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
+    window.devToolsExtension ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
   )
 );

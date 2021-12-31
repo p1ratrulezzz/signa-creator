@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import "./SignaList.scss";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './SignaList.scss';
 
 export const SignaList = () => {
   return (
@@ -16,11 +16,7 @@ export const SignaList = () => {
           <h2 className="signaList__text">Создать свою</h2>
         </Link>
         <Link to="/vika" className="signaList__item">
-          <img
-            src="./images/vika.png"
-            className="signaList__img"
-            alt="Вика"
-          />
+          <img src="./images/vika.png" className="signaList__img" alt="Вика" />
           <h2 className="signaList__text">Вика</h2>
         </Link>
         <Link to="/nasty" className="signaList__item">
@@ -34,4 +30,4 @@ export const SignaList = () => {
       </div>
     </div>
   );
-}
+};
